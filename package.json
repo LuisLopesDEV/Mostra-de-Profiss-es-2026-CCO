@@ -12,14 +12,16 @@
     "preview": "vite preview --host 127.0.0.1",
     "jogar": "node scripts/jogar.mjs",
     "lint": "eslint src scripts tests vite.config.ts eslint.config.mjs",
-    "test": "tsc -p tsconfig.test.json && node --test tests/tracking.test.mjs tests/poligonos.test.mjs",
+    "test": "tsc -p tsconfig.test.json && node --test tests/tracking.test.mjs tests/poligonos.test.mjs tests/solar.test.mjs tests/arcade.test.mjs",
     "check": "npm run lint && npm test && npm run build"
   },
   "dependencies": {
-    "@mediapipe/tasks-vision": "1.2.2"
+    "@mediapipe/tasks-vision": "1.2.2",
+    "three": "0.187.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@types/three": "0.187.0",
     "eslint": "10.14.0",
     "globals": "16.5.0",
     "typescript": "5.9.3",

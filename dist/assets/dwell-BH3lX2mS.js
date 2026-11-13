@@ -1,0 +1,1 @@
+class u{current=null;clear(){this.current=null}update(e,a,t){if(e===null)return this.clear(),{progress:0,activate:!1};const r=this.current,s=r?.target===e&&r.hand===a&&t-r.last<=350?r:{target:e,hand:a,start:t,last:t,fired:!1};s.last=t,this.current=s;const l=Math.min(1,(t-s.start)/2e3),n=l===1&&!s.fired;return n&&(s.fired=!0),{progress:l,activate:n}}}export{u as D};

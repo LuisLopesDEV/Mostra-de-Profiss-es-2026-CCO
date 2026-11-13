@@ -76,7 +76,7 @@ function showGestureStatus() {
   else if (interaction.mode === 'pair') statusText('Duas pinças · rotação e zoom')
   else if (interaction.mode === 'rotate') statusText('Girando o sólido')
   else if (interaction.mode === 'color') statusText('Escolhendo uma cor')
-  else if (camera) statusText(hands.length ? 'Aproxime a pinça de um ponto amarelo' : 'Mostre a mão inteira para a webcam')
+  else if (camera) statusText(hands.length ? 'Aproxime a pinça de um ponto rosa' : 'Mostre a mão inteira para a webcam')
   else if (!request) statusText('Modo mouse')
 }
 
@@ -105,7 +105,7 @@ function draw() {
       }
       ctx.beginPath()
       ctx.arc(hand.point.x, hand.point.y, hand.pinched ? 9 : 6, 0, Math.PI * 2)
-      ctx.strokeStyle = hand.pinched ? '#ffc152' : '#d5fff6'
+      ctx.strokeStyle = hand.pinched ? '#ff83a3' : '#d5fff6'
       ctx.lineWidth = 2
       ctx.stroke()
     }

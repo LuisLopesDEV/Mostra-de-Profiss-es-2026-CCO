@@ -1,103 +1,84 @@
+<div align="center">
+  <img src="public/logo-cacco.png" alt="Logotipo do CACCO" width="88">
+</div>
+
 # Mostra de Profissões 2026 — CACCO
 
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-7.3.7-646CFF?logo=vite&logoColor=white)
-![MediaPipe](https://img.shields.io/badge/MediaPipe_Tasks_Vision-1.2.2-00897B)
+Cinco experiências interativas desenvolvidas pelo **Centro Acadêmico de Ciência da Computação (CACCO)** para a **IV Mostra de Profissões da UNIFEI, Campus Itabira**.
 
-Aplicação web desenvolvida para o estande do **Centro Acadêmico de Ciência da Computação (CACCO)** na **IV Mostra de Profissões da UNIFEI — Campus Itabira**. O lobby reúne duas atividades interativas que podem ser usadas com a webcam ou com o mouse.
+No lobby, escolha uma atividade para cortar frutas, deformar sólidos, explorar o Sistema Solar, guiar o Gaguinho entre dutos ou praticar pontaria. Todas as experiências rodam no navegador e podem ser usadas com a **webcam** ou com o **mouse**.
 
-## 🎮 Atividades
+## Experiências
 
-### Corte no Ar
+| Atividade | Como jogar |
+| --- | --- |
+| **Corte no Ar** | Controle a lâmina com o indicador, a palma ou o mouse. Em uma rodada de 45 segundos, cada fruta soma 10 pontos e acertar o Gaguinho tira 20. O ranking local guarda as dez melhores partidas salvas. |
+| **Polígonos 3D** | Faça uma pinça com o polegar e o indicador sobre um vértice rosa e mova a mão para deformar o sólido. Faça a pinça fora do vértice para girar ou use duas pinças para ajustar o zoom. Com o mouse, arraste a cena ou o vértice e use a roda para aproximar. Escolha entre cubo, pirâmide e octaedro. |
+| **Sistema Solar** | Aponte para um astro por 2 segundos para selecioná-lo. Uma pinça gira a vista e duas ajustam o zoom. Com o mouse, clique no astro, arraste para girar e use a roda para aproximar. Procure o sinal rosado além de Netuno para descobrir o Mundo Gaguinho. |
+| **Voo do Gaguinho** | Suba ou desça a palma ou o indicador para controlar a altura. Também dá para jogar com mouse, toque ou as setas do teclado. Cada abertura atravessada vale 1 ponto. A rodada dura até 90 segundos, com dutos mais rápidos e aberturas menores à medida que o tempo passa. |
+| **Tiro ao Alvo** | Mire com a mão aberta. Quando a mira ficar rosa, feche a mão para atirar na última posição da mira e reabra para preparar o próximo disparo. Com o mouse, clique para atirar. No teclado, use as setas e Espaço. |
 
-Jogo inspirado em *Fruit Ninja*. Use o indicador, a palma da mão ou o mouse para mover a lâmina, cortar frutas e desviar do Gaguinho.
+### Tiro ao Alvo
 
-- Cada rodada dura **45 segundos**. Uma fruta vale **10 pontos** e acertar o Gaguinho desconta **20 pontos**.
-- É possível pausar e retomar a partida e jogar em tela cheia.
-- Ao final da rodada, informe um nome ou apelido e clique em **Salvar pontos**. O recorde e as dez melhores pontuações ficam salvos no navegador.
-- No servidor local, abra `/corte.html?debug=1` para medir os FPS da câmera e o tempo de análise. O painel também permite gravar e reproduzir trajetórias e exportá-las em JSON.
+A rodada dura **30 segundos**. Aparecem até **dois alvos por vez**, e cada um fica visível por até **5,5 segundos**. O centro vale **30 pontos**, o anel intermediário vale **20** e o externo vale **10**. A arena e o lançador permanecem fixos no disparo. Ao final, o jogo exibe a pontuação, a porcentagem de acertos e o recorde local.
 
-### Polígonos 3D
+### Gestos do Sistema Solar
 
-Escolha um **cubo**, uma **pirâmide** ou um **octaedro** e mova os vértices para ver como o sólido muda. Ao ativar a webcam, o sólido aparece sobre a imagem da câmera.
+- **Girar um astro no próprio eixo.** Selecione o astro e feche a mão até as pontas dos dedos ficarem amarelas.
+- **Mover um planeta na órbita.** Selecione o planeta, espere o reconhecimento da palma aberta e mova a mão para o lado.
+- **Montar do zero.** Encoste o polegar no dedo médio à frente da palma, espere as pontas amarelas e solte. O primeiro gesto acende o Sol. Os seguintes revelam um planeta por vez. Use o botão da atividade para montar também com o mouse.
 
-| Ação | Webcam | Mouse |
-| --- | --- | --- |
-| Deformar | Junte o polegar e o indicador sobre um vértice amarelo e arraste. | Arraste um vértice amarelo. |
-| Girar | Faça uma pinça fora dos vértices e mova a mão, ou mova as duas mãos em pinça. | Arraste fora dos vértices. |
-| Ajustar o zoom | Faça uma pinça com cada mão e aproxime ou afaste as mãos. | Use a roda do mouse ou os botões **−** e **+**. |
-| Mudar a cor | Faça uma pinça sobre a roda de cores. | Clique na roda de cores. |
+A cena usa tamanhos, distâncias e velocidades ilustrativos. O Mundo Gaguinho é um planeta fictício criado para a Mostra.
 
-O botão **Restaurar** recupera a forma, a orientação e o zoom iniciais.
+## Como rodar o pacote offline
 
-## 🛠 Tecnologias utilizadas
+**Requisitos.** Node.js instalado, um navegador como Chrome ou Edge e uma webcam apenas se você quiser usar gestos. O ZIP distribuído para a Mostra já inclui a versão compilada em `dist/`, o modelo de rastreamento e as texturas. Com o pacote extraído e o Node.js instalado, não é necessário rodar `npm install` ou ter conexão com a internet.
 
-- TypeScript, HTML5 e CSS3
-- Vite para desenvolvimento e compilação
-- MediaPipe Tasks Vision e WebAssembly para rastreamento de mãos
-- Web Workers para processar o rastreamento em segundo plano
-- Canvas API para desenhar o jogo e projetar os sólidos 3D na tela
-- Node.js e npm para execução local e tarefas de desenvolvimento
+1. Extraia o ZIP inteiro.
+2. No Windows, dê dois cliques em `Jogar.cmd` na pasta extraída. No Linux ou macOS, execute `node scripts/jogar.mjs` nessa pasta.
+3. Abra o [lobby no navegador](http://127.0.0.1:4173/) se ele não abrir sozinho. Mantenha o terminal aberto durante a sessão.
+4. Escolha uma atividade. Se for jogar por gestos, clique na opção de webcam e permita o acesso à câmera.
 
-## 🧠 Conceitos aplicados
+## Como funciona
 
-- Detecção dos pontos das mãos e reconhecimento de gestos de pinça.
-- Física básica com velocidade, gravidade e trajetórias no Corte no Ar.
-- Detecção de colisões por segmentos de reta e compensação da latência com o histórico de posições dos alvos.
-- Projeção em perspectiva, rotação e manipulação de vértices em 3D.
-- Persistência do ranking e do recorde com `localStorage`.
+O **Hand Landmarker**, do MediaPipe Tasks Vision, estima **21 pontos por mão** a partir dos quadros da webcam. O código interpreta a posição e o movimento desses pontos para reconhecer gestos e controlar cada atividade. No Corte no Ar, por exemplo, o jogo verifica se o trajeto da lâmina entre duas posições cruzou uma fruta. O processamento ocorre no próprio navegador.
 
-## ▶ Como executar
+**Tecnologias.** TypeScript, Vite, HTML, CSS, Canvas 2D, MediaPipe Tasks Vision e Web Workers. O Sistema Solar usa Three.js e WebGL 2, com uma versão simplificada em Canvas 2D quando o WebGL 2 não está disponível. O servidor offline usa Node.js.
 
-### Em desenvolvimento
+## Desenvolvimento
 
-Instale o **Node.js 24** (recomendado), clone o repositório e execute na raiz do projeto.
+Use **Node.js 24 ou superior**. Execute os comandos abaixo na raiz do projeto.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Abra o endereço exibido no terminal e escolha uma atividade. Use **← Lobby** para trocar de atividade. Permita o acesso à webcam para usar os controles por gestos. O navegador processa as imagens no próprio dispositivo.
+Abra o endereço que o Vite mostrar no terminal. No PowerShell, você pode usar `npm.cmd` no lugar de `npm`.
 
-Se o PowerShell bloquear `npm`, use `npm.cmd` nos comandos.
-
-### Versão compilada e uso no estande
-
-Depois de instalar as dependências, gere a pasta `dist/` e inicie o servidor local.
-
-```bash
-npm run build
-npm run jogar
-```
-
-Abra [http://127.0.0.1:4173/](http://127.0.0.1:4173/) no Chrome ou no Edge e mantenha o terminal aberto durante o uso.
-
-Se você tem o ZIP do estande, extraia o pacote inteiro. No Windows, abra `Jogar.cmd`. No Linux ou no macOS, execute `node scripts/jogar.mjs` na pasta extraída. O pacote inclui `dist/` e os arquivos do MediaPipe. Com o Node.js instalado, é possível usar as duas atividades sem internet e sem instalar dependências pelo npm.
-
-### Verificações
-
-O comando abaixo executa o lint, os testes de regressão e a compilação.
-
-```bash
-npm run check
-```
-
-## 📁 Estrutura do projeto
-
-| Caminho | Função |
+| Comando | Finalidade |
 | --- | --- |
-| [`index.html`](index.html) e [`src/lobby.ts`](src/lobby.ts) | Lobby de seleção das atividades. |
-| [`corte.html`](corte.html) e [`src/match-controller.ts`](src/match-controller.ts) | Interface, controles e fluxo da partida. |
-| [`src/game.ts`](src/game.ts) e [`src/render.ts`](src/render.ts) | Física, colisões, pontuação e desenho da arena. |
-| [`poligonos.html`](poligonos.html) e [`src/poligonos/`](src/poligonos/) | Modelos 3D, projeção, renderização e interação com gestos. |
-| `src/hand-*.ts` | Captura da webcam, rastreamento e filtragem dos movimentos da mão. |
-| [`public/vision/`](public/vision/) | Modelo e arquivos do MediaPipe usados no navegador. |
-| [`tests/`](tests/) | Testes do rastreamento, dos cortes e da manipulação de sólidos. |
-| [`scripts/jogar.mjs`](scripts/jogar.mjs) e [`Jogar.cmd`](Jogar.cmd) | Servidor local da versão compilada e atalho para Windows. |
+| `npm run build` | Verifica os tipos e gera o site em `dist/`. |
+| `npm test` | Executa os testes de rastreamento e das atividades. |
+| `npm run check` | Executa a análise de código, os testes e a compilação. |
+| `npm run jogar` | Serve a versão compilada de `dist/` no endereço local do estande. |
 
-## 📌 Créditos
+### Onde encontrar o código
 
-O rastreamento de mãos utiliza o MediaPipe Tasks Vision e o modelo Hand Landmarker do Google. Consulte [CREDITOS.txt](CREDITOS.txt) e [LICENSE-MediaPipe.txt](LICENSE-MediaPipe.txt).
+| Caminho | Conteúdo |
+| --- | --- |
+| [`index.html`](index.html) e [`src/lobby.ts`](src/lobby.ts) | Lobby e seleção das atividades. |
+| [`src/match-controller.ts`](src/match-controller.ts) e [`src/game.ts`](src/game.ts) | Controles, rodada e colisões do Corte no Ar. |
+| [`src/poligonos/`](src/poligonos/) | Sólidos 3D e interação com os vértices. |
+| [`src/solar/`](src/solar/) | Cena, planetas e gestos do Sistema Solar. |
+| [`src/arcade/`](src/arcade/) | Voo do Gaguinho, Tiro ao Alvo e controles compartilhados. |
+| [`public/vision/`](public/vision/) e [`public/solar/`](public/solar/) | Modelo, arquivos do MediaPipe e texturas usadas offline. |
 
-A atividade Polígonos 3D foi inspirada na demonstração *Editing 3D shape vertices and rotation* do projeto [Shape Creator](https://github.com/collidingScopes/shape-creator-tutorial).
+## Créditos
+
+- **CACCO**, desenvolvimento e identidade visual do projeto.
+- **Visão computacional**, MediaPipe Tasks Vision e modelo Hand Landmarker. Consulte a [licença do MediaPipe](LICENSE-MediaPipe.txt).
+- **Polígonos 3D**, inspirado na demonstração de edição de vértices e rotação do [Shape Creator](https://github.com/collidingScopes/shape-creator-tutorial).
+- **Sistema Solar**, inspirado na [palestra de Liad Yosef na JSNation 2022](https://gitnation.com/contents/build-a-3d-solar-system-with-hand-recognition-and-threejs). Texturas do [Solar System Scope](https://www.solarsystemscope.com/textures/) sob [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Consulte também a [licença do Three.js](LICENSE-ThreeJS.txt).
+
+Veja as demais referências em [`CREDITOS.txt`](CREDITOS.txt).

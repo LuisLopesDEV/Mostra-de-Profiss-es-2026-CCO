@@ -7,14 +7,15 @@
     <meta name="description" content="Corte no Ar, uma atividade de Ciência da Computação do CACCO na Mostra de Profissões da UNIFEI Itabira.">
     <link rel="icon" type="image/png" href="./logo-cacco.png">
     <title>Corte no Ar · CACCO</title>
-    <script type="module" crossorigin src="./assets/corte-CzMVu_00.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/style-CqKHIapg.js">
-    <link rel="modulepreload" crossorigin href="./assets/config-D4qj6gdX.js">
-    <link rel="modulepreload" crossorigin href="./assets/hand-geometry-BOU07O4r.js">
-    <link rel="modulepreload" crossorigin href="./assets/hand-camera-BT1bSeRb.js">
-    <link rel="modulepreload" crossorigin href="./assets/render-mUCbb1Yp.js">
-    <link rel="stylesheet" crossorigin href="./assets/style-DA5EwQBs.css">
-    <link rel="stylesheet" crossorigin href="./assets/corte-BNPbYEgr.css">
+    <script type="module" crossorigin src="./assets/corte-BW1CQjGt.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/style-jvaNVYZd.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-DKoXKl1O.js">
+    <link rel="modulepreload" crossorigin href="./assets/hand-geometry-BE2zWwBt.js">
+    <link rel="modulepreload" crossorigin href="./assets/hand-camera-B4DhPKdM.js">
+    <link rel="modulepreload" crossorigin href="./assets/record-i2gmRFuf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dwell-BH3lX2mS.js">
+    <link rel="stylesheet" crossorigin href="./assets/style-Cmf06CBr.css">
+    <link rel="stylesheet" crossorigin href="./assets/corte-BjOkJn0B.css">
   </head>
   <body>
     <main class="shell">
@@ -68,12 +69,13 @@
           </section>
 
           <section class="panel" id="setup-panel" hidden>
+            <span id="corte-start-aim" aria-hidden="true" hidden></span>
             <div class="panel-content">
               <h2>Prepare a <em>mão.</em></h2>
               <p id="setup-status" role="status">Aguardando acesso à câmera…</p>
               <p id="camera-rate" hidden></p>
               <label class="hand-aim" id="hand-aim-control">
-                Ponto de controle
+                Controle da lâmina
                 <select id="hand-aim">
                   <option value="index">Indicador</option>
                   <option value="palm">Palma da mão</option>

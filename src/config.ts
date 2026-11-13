@@ -6,6 +6,7 @@ export const ROUND = {
   countdownMs: 3_000,
   fruitPoints: 10,
   bombPenalty: 20,
+  bombChance: 0.46,
   handFlightSpeed: 0.8,
   hitMarginPx: 5,
   cameraFruitMarginPx: 15,

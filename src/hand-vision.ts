@@ -79,7 +79,10 @@ class HandVision {
         side: label === 'Left' || label === 'Right' ? label : null,
         sideScore: side?.score ?? 0,
       }
-      if (this.detail === 'landmarks') hand.landmarks = landmarks.map(({ x, y }) => ({ x, y }))
+      if (this.detail === 'landmarks') {
+        hand.landmarks = landmarks.map(({ x, y }) => ({ x, y }))
+        hand.worldLandmarks = world
+      }
       hands.push(hand)
     }
     return { hands, size, inferenceMs: performance.now() - started, mode: this.mode }

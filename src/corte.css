@@ -80,7 +80,46 @@
 .ranking-dialog th:last-child { width: 76px; }
 .ranking-dialog :is(th, td):last-child { text-align: right; }
 .ranking-dialog td:last-child {
-  color: var(--yellow);
+  color: var(--accent);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
+
+#corte-start-aim {
+  position: absolute;
+  z-index: 2;
+  width: 29px;
+  height: 29px;
+  border: 2px solid #ffda7a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(#ffda7a var(--start-progress, 0%), #181f2b80 0);
+  box-shadow: 0 0 0 2px #191824bb;
+  pointer-events: none;
+}
+
+#corte-start-aim::after {
+  position: absolute;
+  inset: 5px;
+  border: 1px solid #ffda7a;
+  border-radius: 50%;
+  background: #252230;
+  content: '';
+}
+
+#start-camera[data-hand-hover] {
+  position: relative;
+  outline: 2px solid #ffda7a;
+  outline-offset: 3px;
+}
+
+#start-camera[data-hand-hover]::after {
+  position: absolute;
+  inset: auto 0 -7px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #ffda7a var(--start-progress, 0%), #9e7758 0);
+  content: '';
+}
+
+.arena[data-screen="setup"] #setup-status { min-height: 3em; }

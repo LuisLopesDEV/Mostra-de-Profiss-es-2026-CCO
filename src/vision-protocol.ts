@@ -13,6 +13,7 @@ export type HandObservation = {
   side: HandSide | null
   sideScore: number
   landmarks?: Point[]
+  worldLandmarks?: (Point & { z: number })[]
 }
 
 export type LightRegion = { center: Point; span: number }

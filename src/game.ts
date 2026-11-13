@@ -200,7 +200,7 @@ export class SliceGame {
         spin: randomBetween(-1.6, 1.6),
       }
 
-      const bomb = roundAgeMs > 2500 && i === count - 1 && Math.random() < 0.38
+      const bomb = roundAgeMs > 2500 && i === count - 1 && Math.random() < ROUND.bombChance
       if (bomb) {
         this.activeTargets.push({ ...motion, kind: 'bomb' })
       } else {

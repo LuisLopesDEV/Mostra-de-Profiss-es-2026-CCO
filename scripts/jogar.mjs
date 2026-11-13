@@ -15,6 +15,7 @@ const contentTypes = {
   '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
   '.png': 'image/png',
+  '.webp': 'image/webp',
   '.svg': 'image/svg+xml',
   '.json': 'application/json; charset=utf-8',
   '.ico': 'image/x-icon',
@@ -23,7 +24,7 @@ const contentTypes = {
   '.task': 'application/octet-stream',
 }
 
-const pages = ['index.html', 'corte.html', 'poligonos.html']
+const pages = ['index.html', 'corte.html', 'poligonos.html', 'solar.html', 'voo.html', 'tiro.html']
 if (!pages.every(page => existsSync(resolve(directory, page)))) {
   console.error('Pasta dist incompleta. Extraia o ZIP inteiro ou execute npm.cmd run build.')
   process.exit(1)

@@ -191,7 +191,7 @@ export class ArenaRenderer {
     const ctx = this.ctx
     ctx.save()
     ctx.lineCap = 'round'
-    ctx.strokeStyle = '#ffda71'
+    ctx.strokeStyle = '#ff83a3'
 
     for (let i = 1; i < blade.trail.length; i++) {
       const start = blade.trail[i - 1]
@@ -206,7 +206,7 @@ export class ArenaRenderer {
     }
 
     ctx.globalAlpha = 1
-    ctx.fillStyle = '#fff1ba'
+    ctx.fillStyle = '#ffe0ea'
     ctx.beginPath()
     ctx.arc(blade.point.x, blade.point.y, 6, 0, Math.PI * 2)
     ctx.fill()
@@ -217,7 +217,7 @@ export class ArenaRenderer {
     const ctx = this.ctx
     const float = Math.sin(time / 770) * 10
     ctx.save()
-    ctx.strokeStyle = '#f4ca628c'
+    ctx.strokeStyle = '#ff83a38c'
     ctx.lineWidth = 3
     ctx.beginPath()
     ctx.moveTo(795, 527)

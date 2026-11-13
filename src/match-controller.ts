@@ -4,18 +4,15 @@ import { SliceGame } from './game.js'
 import type { GameView } from './game-view.js'
 import { cameraErrorMessage, connectHandCamera } from './hand-camera.js'
 import type { CameraEvent, HandCamera, TraceSample } from './hand-camera.js'
-import { predictHand } from './hand-filter.js'
 import type { HandFrame } from './hand-filter.js'
 import { arenaPoint, previewGuide, previewPoint } from './hand-geometry.js'
 import type { FrameGeometry } from './hand-geometry.js'
 import { addRankingScore, loadRanking, loadRecord, saveRecord } from './record.js'
 import { ArenaRenderer } from './render.js'
+import { DwellSelection } from './solar/dwell.js'
 import type { Control, HandAim, Screen, TimedStroke } from './types.js'
 
-const HAND_GUIDES = {
-  index: 'Enquadre a mão inteira e estenda o indicador.',
-  palm: 'Enquadre a mão e mova a palma para controlar a lâmina.',
-}
+const PALM_SETUP = 'Mire com a palma e segure sobre Começar partida por 2 segundos.'
 
 export class MatchController {
   private readonly view: GameView
@@ -23,6 +20,7 @@ export class MatchController {
   private readonly game = new SliceGame()
   private readonly mouseBlade = new BladeInput(0, 185)
   private readonly handBlade = new BladeInput(0.065, TRACKING.strokeGapMs, TRACKING.bladeGlideMs)
+  private readonly startDwell = new DwellSelection<HTMLButtonElement>()
   private readonly trace?: (sample: TraceSample) => void
   private screen: Screen = 'menu'
   private control: Control = 'mouse'
@@ -36,7 +34,6 @@ export class MatchController {
   private camera: HandCamera | null = null
   private cameraRequest: AbortController | null = null
   private recovering = false
-  private hand: { frame: HandFrame; geometry: FrameGeometry } | null = null
 
   constructor(view: GameView, gaguinho: HTMLImageElement, trace?: (sample: TraceSample) => void) {
     this.view = view
@@ -69,7 +66,7 @@ export class MatchController {
     this.syncCamera()
     this.mouseBlade.clear()
     this.handBlade.clear()
-    this.hand = null
+    this.clearStart()
     this.game.clearTargetHistory()
   }
 
@@ -84,7 +81,7 @@ export class MatchController {
     this.camera = null
     camera?.close()
     this.recovering = false
-    this.hand = null
+    this.clearStart()
     this.handBlade.clear()
     this.view.buttons.startCamera.disabled = true
     this.view.showCamera(false)
@@ -130,10 +127,10 @@ export class MatchController {
       }
 
       this.camera = camera
-      camera.setAim(this.handAim)
+      camera.setAim('palm')
       this.syncCamera()
       this.view.setCameraLabel('Mostre uma mão')
-      this.view.setSetupStatus(HAND_GUIDES[this.handAim])
+      this.view.setSetupStatus('Enquadre a mão inteira na prévia.')
       this.view.setStatus('Câmera ligada')
     } catch (error) {
       if (!request.signal.aborted) this.cameraFailed(error)
@@ -141,8 +138,9 @@ export class MatchController {
   }
 
   private startRound(control: Control) {
-    if (control === 'camera' && (!this.camera || this.view.buttons.startCamera.disabled || this.recovering)) return
+    if (control === 'camera' && (this.screen !== 'setup' || !this.camera || this.view.buttons.startCamera.disabled || this.recovering)) return
     if (control === 'mouse') this.stopCamera()
+    else this.camera?.setAim(this.handAim)
 
     this.control = control
     this.game.reset()
@@ -212,6 +210,22 @@ export class MatchController {
     this.refreshHud()
   }
 
+  private clearStart() {
+    this.startDwell.clear()
+    this.view.clearStartAim()
+  }
+
+  private aimAtStart(frame: HandFrame, geometry: FrameGeometry) {
+    const button = this.view.buttons.startCamera
+    button.disabled = false
+    const point = arenaPoint(frame.filtered, geometry)
+    const over = this.view.pointAtStart({ x: point.x / ARENA.width, y: point.y / ARENA.height })
+    const result = this.startDwell.update(over ? button : null, 0, frame.receivedAt)
+    this.view.showStartProgress(over, result.progress)
+    this.view.setSetupStatus(PALM_SETUP)
+    if (result.activate) this.startRound('camera')
+  }
+
   private handleCamera(event: CameraEvent) {
     if (event.kind === 'error') {
       this.cameraFailed(event.error)
@@ -221,14 +235,16 @@ export class MatchController {
     if (!this.acceptsHand()) return
 
     if (event.kind === 'tracking') {
-      this.hand = { frame: event.frame, geometry: event.geometry }
       this.view.guide(previewGuide(event.geometry))
       this.view.aim(previewPoint(event.frame.filtered, event.geometry))
       this.view.setCameraLabel('Mão detectada')
       if (this.screen === 'setup') {
-        this.view.buttons.startCamera.disabled = false
-        const point = this.handAim === 'palm' ? 'a palma' : 'o indicador'
-        this.view.setSetupStatus('Mão detectada. Mova ' + point + ' para testar a lâmina.')
+        if (document.hidden || !document.hasFocus()) {
+          this.clearStart()
+          return
+        }
+        this.aimAtStart(event.frame, event.geometry)
+        return
       } else if (this.screen === 'playing') {
         this.view.setStatus('Corte as frutas')
       }
@@ -242,13 +258,20 @@ export class MatchController {
       return
     }
 
-    this.hand = null
     if (event.kind === 'holding') {
       if (!event.keepsStroke) this.handBlade.hold()
       this.view.aim(previewPoint(event.frame.filtered, event.geometry), true)
+      if (this.screen === 'setup' && performance.now() - event.frame.receivedAt > 165) {
+        this.clearStart()
+        this.view.buttons.startCamera.disabled = true
+      }
       return
     }
 
+    if (this.screen === 'setup') {
+      this.clearStart()
+      this.view.buttons.startCamera.disabled = true
+    }
     this.handBlade.clear()
     this.view.aim(null)
     if (event.kind === 'recovering') {
@@ -262,7 +285,7 @@ export class MatchController {
     const guidance = event.kind === 'extend' ? 'Estenda o indicador' : 'Mostre uma mão'
     this.view.setCameraLabel(guidance)
     if (this.screen === 'playing') this.view.setStatus(guidance)
-    if (this.screen === 'setup') this.view.setSetupStatus(HAND_GUIDES[this.handAim])
+    if (this.screen === 'setup') this.view.setSetupStatus('Enquadre a mão inteira na prévia.')
   }
 
   private cameraFailed(error: unknown) {
@@ -314,10 +337,7 @@ export class MatchController {
 
     if (time >= this.feedbackUntil) this.view.clearHit()
     // Na partida, o ponto visível da lâmina acompanha os segmentos confirmados.
-    const visualPoint = this.screen === 'setup' && this.hand
-      ? arenaPoint(predictHand(this.hand.frame, time), this.hand.geometry)
-      : undefined
-    const blade = this.control === 'camera' ? this.handBlade.drawing(time, visualPoint) : this.mouseBlade.drawing(time)
+    const blade = this.control === 'camera' ? this.handBlade.drawing(time) : this.mouseBlade.drawing(time)
     this.renderer.draw(this.game, time, this.screen === 'menu' || this.screen === 'setup' || this.screen === 'result', blade)
     requestAnimationFrame(this.animate)
   }
@@ -329,12 +349,7 @@ export class MatchController {
     buttons.setupMouse.addEventListener('click', () => this.startRound('mouse'))
     this.view.handAim.addEventListener('change', () => {
       if (this.screen !== 'setup' || !this.camera) return
-      this.camera.setAim(this.handAim)
-      this.hand = null
-      this.handBlade.clear()
-      this.view.aim(null)
-      buttons.startCamera.disabled = true
-      this.view.setSetupStatus(HAND_GUIDES[this.handAim])
+      this.clearStart()
     })
     buttons.startCamera.addEventListener('click', () => this.startRound('camera'))
     buttons.setupBack.addEventListener('click', () => this.showMenu())
@@ -384,11 +399,17 @@ export class MatchController {
       else this.resume()
     })
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) this.pause()
+      if (document.hidden) {
+        this.pause()
+        this.clearStart()
+      }
       this.lastFrame = performance.now()
       this.syncCamera()
     })
-    window.addEventListener('blur', () => this.pause())
+    window.addEventListener('blur', () => {
+      this.pause()
+      this.clearStart()
+    })
     window.addEventListener('pagehide', () => this.stopCamera())
     window.addEventListener('pageshow', event => {
       if (event.persisted) this.showMenu()

@@ -3,7 +3,7 @@ import type { Detection, HandSide } from '../vision-protocol.js'
 import type { SolidModel } from './solid.js'
 
 export type Grip = { id: number; point: Point }
-export type HandCursor = Grip & { pinched: boolean; joints: Point[] }
+export type HandCursor = Grip & { pinched: boolean; joints: Point[]; indexExtended: boolean; worldJoints?: readonly (Point & { z: number })[] }
 type TrackedHand = HandCursor & { palm: Point; side: HandSide | null }
 type ColorWheel = { center: Point; radius: number }
 
@@ -73,6 +73,8 @@ export class PinchTracker {
         pinched,
         point,
         joints: candidate.hand.landmarks?.map(joint => mirrored(joint, image)) ?? [],
+        worldJoints: candidate.hand.worldLandmarks,
+        indexExtended: candidate.hand.indexExtended,
         palm: candidate.hand.palm,
         side: candidate.side,
       }

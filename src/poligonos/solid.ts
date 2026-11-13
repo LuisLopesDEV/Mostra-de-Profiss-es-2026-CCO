@@ -169,7 +169,7 @@ export function paintSolid(
     const selected = index === grabbed || index === hovered
     ctx.beginPath()
     ctx.arc(point.x, point.y, radius * (selected ? 1.38 : point.depth > CAMERA_DISTANCE ? 0.76 : 1), 0, Math.PI * 2)
-    ctx.fillStyle = index === grabbed ? '#ffa42f' : point.depth > CAMERA_DISTANCE ? '#fff2b8b0' : '#fff4b2'
+    ctx.fillStyle = index === grabbed ? '#ff6599' : point.depth > CAMERA_DISTANCE ? '#ffb9d0b0' : '#ffc6d9'
     ctx.strokeStyle = selected ? '#fff' : '#291c43'
     ctx.lineWidth = selected ? 2 : 1
     ctx.fill()

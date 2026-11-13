@@ -21,6 +21,20 @@ function hand(x, y = 0.28125, overrides = {}) {
   }
 }
 
+test('Gaguinho aparece com a chance da rodada e respeita a abertura sem bombas', t => {
+  const roll = t.mock.method(Math, 'random', () => 0.43)
+  const game = new SliceGame()
+  game.advance(0.23, 2000)
+  assert.equal(game.targets.some(target => target.kind === 'bomb'), false)
+  game.reset()
+  game.advance(0.23, 3000)
+  assert.equal(game.targets.filter(target => target.kind === 'bomb').length, 1)
+  game.reset()
+  roll.mock.mockImplementation(() => 0.47)
+  game.advance(0.23, 3000)
+  assert.equal(game.targets.some(target => target.kind === 'bomb'), false)
+})
+
 function cameraProbe(t, deferred = false) {
   let now = 1000
   let index = 0

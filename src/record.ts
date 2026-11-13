@@ -5,18 +5,18 @@ export const RANKING_NAME_LIMIT = 24
 
 export type RankingEntry = { name: string; score: number }
 
-export function loadRecord() {
+export function loadRecord(key = RECORD_KEY) {
   try {
-    const value = Number(localStorage.getItem(RECORD_KEY))
+    const value = Number(localStorage.getItem(key))
     return Number.isSafeInteger(value) && value > 0 ? value : 0
   } catch {
     return 0
   }
 }
 
-export function saveRecord(score: number) {
+export function saveRecord(score: number, key = RECORD_KEY) {
   try {
-    localStorage.setItem(RECORD_KEY, String(score))
+    localStorage.setItem(key, String(score))
   } catch {
     // O recorde da sessão ainda fica disponível no controlador.
   }

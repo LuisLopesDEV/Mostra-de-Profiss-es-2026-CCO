@@ -49,6 +49,7 @@ export class GameView {
   private readonly cameraDot = element('camera-dot')
   private readonly cameraLabel = element('camera-label')
   private readonly setupStatus = element('setup-status')
+  private readonly startAim = element('corte-start-aim')
   private readonly cameraRate = element('camera-rate')
   private readonly controlLabel = element('control-label')
   private readonly gameStatus = element('game-status')
@@ -129,6 +130,32 @@ export class GameView {
     this.cameraDot.style.left = point.x * 100 + '%'
     this.cameraDot.style.top = point.y * 100 + '%'
     this.cameraDot.style.opacity = held ? '0.5' : '1'
+  }
+
+  pointAtStart(point: Point) {
+    this.startAim.hidden = false
+    this.startAim.style.left = point.x * 100 + '%'
+    this.startAim.style.top = point.y * 100 + '%'
+    const area = this.panels.setup.getBoundingClientRect()
+    const button = this.buttons.startCamera
+    if (button.disabled || !area.width || !area.height) return false
+    const bounds = button.getBoundingClientRect()
+    const x = area.left + area.width * point.x
+    const y = area.top + area.height * point.y
+    const margin = button.hasAttribute('data-hand-hover') ? 10 : 0
+    return x >= bounds.left - margin && x <= bounds.right + margin && y >= bounds.top - margin && y <= bounds.bottom + margin
+  }
+
+  showStartProgress(over: boolean, progress: number) {
+    const value = progress * 100 + '%'
+    this.buttons.startCamera.toggleAttribute('data-hand-hover', over)
+    this.buttons.startCamera.style.setProperty('--start-progress', value)
+    this.startAim.style.setProperty('--start-progress', value)
+  }
+
+  clearStartAim() {
+    this.startAim.hidden = true
+    this.showStartProgress(false, 0)
   }
 
   updateHud(score: number, remaining: number, best: number) {

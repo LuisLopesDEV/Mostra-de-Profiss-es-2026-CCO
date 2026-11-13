@@ -37,7 +37,7 @@ export function addTrackingDiagnostics() {
   panel.open = true
   panel.innerHTML = [
     '<summary>Diagnóstico da câmera</summary>',
-    '<p>Grava coordenadas por até 30 segundos. Indicador em azul, palma em verde e ponto de controle filtrado em amarelo.</p>',
+    '<p>Grava coordenadas por até 30 segundos. Indicador em azul, palma em verde e ponto de controle filtrado em rosa.</p>',
     '<div class="actions">',
     '<button class="button primary" type="button" data-record>Gravar trilha</button>',
     '<button class="button secondary" type="button" data-play disabled>Reproduzir</button>',
@@ -78,7 +78,7 @@ export function addTrackingDiagnostics() {
     ctx.lineWidth = 1
     ctx.strokeRect(1, 1, width - 2, height - 2)
 
-    const tracks = { raw: '#8ba7ff', filtered: '#f7cb5e', palm: '#7fd3a5' } as const
+    const tracks = { raw: '#8ba7ff', filtered: '#ff83a3', palm: '#7fd3a5' } as const
     for (const key of ['raw', 'filtered', 'palm'] as const) {
       ctx.strokeStyle = tracks[key]
       ctx.lineWidth = 2

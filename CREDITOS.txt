@@ -10,3 +10,24 @@ https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/
 
 Filtro adaptativo inspirado no 1 Euro Filter de Géry Casiez, Nicolas Roussel e Daniel Vogel (CHI 2012).
 https://gery.casiez.net/1euro/
+
+Sistema Solar
+Referência de interação — Liad Yosef, Build a 3D Solar System with Hand Recognition and Three.js, JSNation 2022.
+https://gitnation.com/contents/build-a-3d-solar-system-with-hand-recognition-and-threejs
+
+Three.js, MIT. Consulte LICENSE-ThreeJS.txt.
+https://threejs.org/
+
+Texturas planetárias e fundo estrelado — Solar System Scope (INOVE), CC BY 4.0.
+Texturas redimensionadas e convertidas para WebP. A capa do Sistema Solar usa a renderização da atividade.
+https://www.solarsystemscope.com/textures/
+https://creativecommons.org/licenses/by/4.0/
+
+Mundo Gaguinho — mapa planetário ilustrado para a Mostra a partir do mascote do projeto.
+
+Referência para os dados dos planetas — NASA Science e NASA Planetary Fact Sheet.
+https://science.nasa.gov/solar-system/planets/
+https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+
+Capa do Corte no Ar — ilustração do lobby baseada no sprite do Gaguinho.
+Voo do Gaguinho e Tiro ao Alvo — ilustrações e sprites criados para a Mostra com base no mascote do projeto.
