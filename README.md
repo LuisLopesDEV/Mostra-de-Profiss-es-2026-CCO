@@ -1,52 +1,103 @@
-# Mostra de Profissões — CACCO
+# Mostra de Profissões 2026 — CACCO
 
-Duas atividades de Ciência da Computação para a IV Mostra de Profissões da UNIFEI Itabira.
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.3.7-646CFF?logo=vite&logoColor=white)
+![MediaPipe](https://img.shields.io/badge/MediaPipe_Tasks_Vision-1.2.2-00897B)
 
-- **Corte no Ar** — corte frutas e evite o Gaguinho com o indicador ou com o mouse.
-- **Polígonos 3D** — deforme e gire sólidos com gestos da mão ou com o mouse.
+Aplicação web desenvolvida para o estande do **Centro Acadêmico de Ciência da Computação (CACCO)** na **IV Mostra de Profissões da UNIFEI — Campus Itabira**. O lobby reúne duas atividades interativas que podem ser usadas com a webcam ou com o mouse.
 
-## Abrir no estande
+## 🎮 Atividades
 
-1. No Windows, clique com o botão direito no ZIP e escolha **Extrair Tudo**. O computador precisa ter Node.js instalado.
-2. Na pasta extraída, encontre **Jogar.cmd** ao lado das pastas `scripts/` e `dist/`. Dê dois cliques em **Jogar.cmd** e mantenha a janela do terminal aberta.
-3. Se o navegador não abrir automaticamente, acesse **http://127.0.0.1:4173/** no Chrome ou Edge.
-4. Escolha uma atividade no lobby. O botão **← Lobby** permite trocar de atividade.
+### Corte no Ar
 
-Em Linux ou macOS, abra o terminal na pasta extraída e execute `node scripts/jogar.mjs`.
+Jogo inspirado em *Fruit Ninja*. Use o indicador, a palma da mão ou o mouse para mover a lâmina, cortar frutas e desviar do Gaguinho.
 
-O pacote traz o jogo compilado e os arquivos do MediaPipe. O servidor local permite usar as atividades sem instalar dependências npm e sem conexão à internet.
+- Cada rodada dura **45 segundos**. Uma fruta vale **10 pontos** e acertar o Gaguinho desconta **20 pontos**.
+- É possível pausar e retomar a partida e jogar em tela cheia.
+- Ao final da rodada, informe um nome ou apelido e clique em **Salvar pontos**. O recorde e as dez melhores pontuações ficam salvos no navegador.
+- No servidor local, abra `/corte.html?debug=1` para medir os FPS da câmera e o tempo de análise. O painel também permite gravar e reproduzir trajetórias e exportá-las em JSON.
 
-## Corte no Ar
+### Polígonos 3D
 
-Na preparação da webcam, escolha **Indicador** ou **Palma da mão**. A câmera tem uma margem de acerto de 15 pixels nas frutas e 5 pixels no Gaguinho. O mouse usa 5 pixels para os dois alvos. A margem e a opção de palma ficam em `src/config.ts`.
+Escolha um **cubo**, uma **pirâmide** ou um **octaedro** e mova os vértices para ver como o sólido muda. Ao ativar a webcam, o sólido aparece sobre a imagem da câmera.
 
-Cada fruta vale 10 pontos e acertar o Gaguinho desconta 20. No fim da rodada, informe um nome ou apelido e clique em **Salvar pontos**. O ranking guarda as dez melhores partidas neste navegador e pode ser aberto pelo menu ou pela tela de resultado.
+| Ação | Webcam | Mouse |
+| --- | --- | --- |
+| Deformar | Junte o polegar e o indicador sobre um vértice amarelo e arraste. | Arraste um vértice amarelo. |
+| Girar | Faça uma pinça fora dos vértices e mova a mão, ou mova as duas mãos em pinça. | Arraste fora dos vértices. |
+| Ajustar o zoom | Faça uma pinça com cada mão e aproxime ou afaste as mãos. | Use a roda do mouse ou os botões **−** e **+**. |
+| Mudar a cor | Faça uma pinça sobre a roda de cores. | Clique na roda de cores. |
 
-Para comparar os controles no notebook da Mostra, abra **http://127.0.0.1:4173/corte.html?debug=1**. O painel informa os FPS do vídeo, as posições confirmadas por segundo e o tempo de análise e chegada. O JSON exportado inclui a trajetória e o ponto de controle escolhido.
+O botão **Restaurar** recupera a forma, a orientação e o zoom iniciais.
 
-## Polígonos 3D
+## 🛠 Tecnologias utilizadas
 
-Clique em **Ativar webcam** e permita o acesso. Mostre o polegar e o indicador inteiros na imagem. Junte os dois dedos sobre um vértice amarelo e mova a mão para deformar o sólido. Faça a pinça com as duas mãos e mova ou afaste as mãos para girar e ampliar. Uma pinça fora dos vértices também permite girar. A roda colorida muda a cor do sólido.
+- TypeScript, HTML5 e CSS3
+- Vite para desenvolvimento e compilação
+- MediaPipe Tasks Vision e WebAssembly para rastreamento de mãos
+- Web Workers para processar o rastreamento em segundo plano
+- Canvas API para desenhar o jogo e projetar os sólidos 3D na tela
+- Node.js e npm para execução local e tarefas de desenvolvimento
 
-Com o mouse, arraste os vértices para deformar e arraste fora dos vértices para girar. Use a roda do mouse ou os botões **−** e **+** para ajustar o zoom. Use **Restaurar** para voltar à forma inicial. Os botões de seleção permitem trocar entre cubo, pirâmide e octaedro.
+## 🧠 Conceitos aplicados
 
-## Editar o projeto
+- Detecção dos pontos das mãos e reconhecimento de gestos de pinça.
+- Física básica com velocidade, gravidade e trajetórias no Corte no Ar.
+- Detecção de colisões por segmentos de reta e compensação da latência com o histórico de posições dos alvos.
+- Projeção em perspectiva, rotação e manipulação de vértices em 3D.
+- Persistência do ranking e do recorde com `localStorage`.
 
-Use Node.js 24 ou superior. Abra a pasta do projeto no terminal.
+## ▶ Como executar
+
+### Em desenvolvimento
+
+Instale o **Node.js 24** (recomendado), clone o repositório e execute na raiz do projeto.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-No PowerShell, use `npm.cmd ci` e `npm.cmd run dev`. Abra o endereço exibido no terminal. Execute `npm run check` para verificar o código, executar os testes e gerar a versão compilada em `dist/`.
+Abra o endereço exibido no terminal e escolha uma atividade. Use **← Lobby** para trocar de atividade. Permita o acesso à webcam para usar os controles por gestos. O navegador processa as imagens no próprio dispositivo.
 
-- `index.html` e `src/lobby.ts` — lobby.
-- `corte.html` e `src/match-controller.ts` — Corte no Ar.
-- `poligonos.html` e `src/poligonos/` — cena 3D e controles.
-- `src/style.css` e `src/mostra.css` — identidade visual.
-- `public/vision/` — modelo e execução local do MediaPipe.
+Se o PowerShell bloquear `npm`, use `npm.cmd` nos comandos.
 
-## Créditos
+### Versão compilada e uso no estande
 
-Identidade do CACCO e rastreamento de mãos com MediaPipe Tasks Vision. A atividade Polígonos 3D foi inspirada na demonstração *Editing 3D shape vertices and rotation* do projeto Shape Creator. Consulte `CREDITOS.txt` e `LICENSE-MediaPipe.txt`. [Shape Creator](https://github.com/collidingScopes/shape-creator-tutorial)
+Depois de instalar as dependências, gere a pasta `dist/` e inicie o servidor local.
+
+```bash
+npm run build
+npm run jogar
+```
+
+Abra [http://127.0.0.1:4173/](http://127.0.0.1:4173/) no Chrome ou no Edge e mantenha o terminal aberto durante o uso.
+
+Se você tem o ZIP do estande, extraia o pacote inteiro. No Windows, abra `Jogar.cmd`. No Linux ou no macOS, execute `node scripts/jogar.mjs` na pasta extraída. O pacote inclui `dist/` e os arquivos do MediaPipe. Com o Node.js instalado, é possível usar as duas atividades sem internet e sem instalar dependências pelo npm.
+
+### Verificações
+
+O comando abaixo executa o lint, os testes de regressão e a compilação.
+
+```bash
+npm run check
+```
+
+## 📁 Estrutura do projeto
+
+| Caminho | Função |
+| --- | --- |
+| [`index.html`](index.html) e [`src/lobby.ts`](src/lobby.ts) | Lobby de seleção das atividades. |
+| [`corte.html`](corte.html) e [`src/match-controller.ts`](src/match-controller.ts) | Interface, controles e fluxo da partida. |
+| [`src/game.ts`](src/game.ts) e [`src/render.ts`](src/render.ts) | Física, colisões, pontuação e desenho da arena. |
+| [`poligonos.html`](poligonos.html) e [`src/poligonos/`](src/poligonos/) | Modelos 3D, projeção, renderização e interação com gestos. |
+| `src/hand-*.ts` | Captura da webcam, rastreamento e filtragem dos movimentos da mão. |
+| [`public/vision/`](public/vision/) | Modelo e arquivos do MediaPipe usados no navegador. |
+| [`tests/`](tests/) | Testes do rastreamento, dos cortes e da manipulação de sólidos. |
+| [`scripts/jogar.mjs`](scripts/jogar.mjs) e [`Jogar.cmd`](Jogar.cmd) | Servidor local da versão compilada e atalho para Windows. |
+
+## 📌 Créditos
+
+O rastreamento de mãos utiliza o MediaPipe Tasks Vision e o modelo Hand Landmarker do Google. Consulte [CREDITOS.txt](CREDITOS.txt) e [LICENSE-MediaPipe.txt](LICENSE-MediaPipe.txt).
+
+A atividade Polígonos 3D foi inspirada na demonstração *Editing 3D shape vertices and rotation* do projeto [Shape Creator](https://github.com/collidingScopes/shape-creator-tutorial).
