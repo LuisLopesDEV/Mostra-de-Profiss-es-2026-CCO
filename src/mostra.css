@@ -1,0 +1,219 @@
+.lobby-page,
+.sculpture-page {
+  width: min(1170px, calc(100% - 48px));
+}
+
+.lobby-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 275px);
+  align-items: end;
+  gap: 20px;
+  margin: clamp(26px, 5vw, 66px) 0 26px;
+}
+
+.lobby-heading h1 { max-width: 790px; font-size: clamp(43px, 7vw, 90px); }
+.lobby-heading p,
+.sculpture-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.activities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(13px, 2vw, 24px);
+}
+
+.activity {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #495065;
+  border-radius: 12px;
+  background: #22252d;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.activity:hover { border-color: var(--yellow); background: #292d38; }
+.activity-cover { aspect-ratio: 17 / 8; overflow: hidden; background: #22223b; }
+.activity-cover canvas { display: block; width: 100%; height: 100%; }
+.activity-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  padding: clamp(15px, 2vw, 24px);
+  border-top: 1px solid #4c4860;
+}
+
+.activity h2 {
+  margin: 0 0 6px;
+  font-family: 'Arial Black', 'Segoe UI', sans-serif;
+  font-size: clamp(24px, 3.1vw, 38px);
+  letter-spacing: -0.048em;
+  line-height: 1.08;
+}
+
+.activity p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.activity-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid #6f674c;
+  border-radius: 7px;
+  color: var(--yellow);
+  font-size: 13px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.activity:hover .activity-action { background: var(--yellow); color: #211a0b; }
+.lobby-note { margin: 16px 0 0; color: var(--muted); font-size: 12px; }
+
+.sculpture-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin: 17px 0 15px;
+}
+.sculpture-heading h1 { font-size: clamp(38px, 5.4vw, 66px); }
+.sculpture-heading p { margin-top: 6px; font-size: 13px; }
+.sculptor {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 3px solid #7e72d7;
+  border-radius: 9px;
+  background: #22262e;
+}
+.shape-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 8px 11px;
+}
+.shape-picker, .shape-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.shape-toolbar button {
+  min-height: 34px;
+  padding: 5px 10px;
+  border: 1px solid #565e73;
+  border-radius: 6px;
+  color: var(--ink);
+  background: #292d38;
+  font-size: 13px;
+  font-weight: 700;
+}
+.shape-toolbar button:hover { background: #3a4151; }
+.shape-toolbar button[aria-pressed="true"] {
+  border-color: #a69ef3;
+  background: #3d386a;
+  color: #f7edff;
+}
+.shape-tools button[id^="zoom-"] { min-width: 34px; font-size: 17px; }
+
+.sculpture-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: min(610px, max(312px, calc(100svh - 292px)));
+  overflow: hidden;
+  isolation: isolate;
+  cursor: grab;
+  touch-action: none;
+  border-block: 1px solid #454b59;
+  background-color: #161a24;
+  background-image: linear-gradient(#acbbff14 1px, transparent 1px), linear-gradient(90deg, #acbbff14 1px, transparent 1px), radial-gradient(ellipse at 50% 54%, #382658, #161a24 67%);
+  background-size: 38px 38px, 38px 38px, 100% 100%;
+}
+.sculpture-stage:active { cursor: grabbing; }
+.sculpture-stage canvas,
+.sculpture-stage video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.sculpture-stage video { object-fit: contain; transform: scaleX(-1); }
+.scene-wheel {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  width: clamp(42px, 7vw, 64px);
+  aspect-ratio: 1;
+  border: 2px solid #fffbefcc;
+  border-radius: 50%;
+  background: conic-gradient(#ff3a36, #ffe42b, #61f43f, #23e1f6, #4e60ff, #df3ff2, #ff3a36);
+  box-shadow: 0 0 0 3px #14171c88;
+}
+.scene-wheel:hover { border-color: #fff; }
+.solid-detail {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  padding: 6px 9px;
+  border: 1px solid #ffffff35;
+  border-radius: 5px;
+  background: #121522db;
+  font-size: 12px;
+  font-weight: 700;
+  pointer-events: none;
+}
+.scene-exit { display: none; }
+.scene-status {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3px 15px;
+  padding: 7px 11px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.scene-status [role="status"] { color: #f2e8ff; font-weight: 650; }
+.sculpture-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  margin: 10px 0 0;
+}
+.sculpture-controls p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.sculpture-controls strong { margin-right: 4px; color: var(--yellow); }
+.sculptor:fullscreen { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; border: 0; border-radius: 0; }
+.sculptor:fullscreen .sculpture-stage { width: 100%; height: 100%; max-height: none; }
+.sculptor:fullscreen .scene-exit {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: block;
+  background: #14171cd9;
+}
+
+@media (max-width: 870px) {
+  .activity-info { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 640px) {
+  .lobby-page, .sculpture-page { width: calc(100% - 24px); }
+  .lobby-heading { grid-template-columns: 1fr; gap: 9px; margin: 25px 0 17px; }
+  .lobby-heading p { font-size: 13px; }
+  .activities, .sculpture-controls { grid-template-columns: 1fr; }
+  .activity-info { align-items: flex-end; flex-direction: row; }
+  .activity-action { padding-inline: 7px; font-size: 11px; }
+  .activity h2 { font-size: 25px; }
+  .activity p { font-size: 12px; }
+  .sculpture-stage { aspect-ratio: 4 / 3; max-height: none; }
+  .shape-toolbar button { padding-inline: 7px; font-size: 11px; }
+  .scene-status { font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activity { transition: none; }
+}
